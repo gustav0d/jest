@@ -242,6 +242,7 @@ export const InitialOptions = Type.Partial(
     coverageProvider: CoverageProvider,
     coverageReporters: CoverageReporters,
     coverageThreshold: CoverageThreshold,
+    customMockPath: Type.String(),
     dependencyExtractor: Type.String(),
     detectLeaks: Type.Boolean(),
     detectOpenHandles: Type.Boolean(),

@@ -212,6 +212,7 @@ export type DefaultOptions = {
   watchPathIgnorePatterns: Array<string>;
   watchman: boolean;
   workerThreads: boolean;
+  customMockPath?: string;
 };
 
 export type DisplayName = {
@@ -335,6 +336,7 @@ export type ProjectConfig = {
   coverageDirectory: string;
   coveragePathIgnorePatterns: Array<string>;
   coverageReporters: CoverageReporters;
+  customMockPath?: string;
   cwd: string;
   dependencyExtractor?: string;
   detectLeaks: boolean;

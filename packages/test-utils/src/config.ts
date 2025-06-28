@@ -79,6 +79,7 @@ const DEFAULT_PROJECT_CONFIG: Config.ProjectConfig = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [],
   coverageReporters: [],
+  customMockPath: '__mocks__',
   cwd: '/test_root_dir/',
   detectLeaks: false,
   detectOpenHandles: false,
