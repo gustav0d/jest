@@ -36,6 +36,8 @@ export class DependencyResolver {
 
   resolve(file: string, options?: ResolveModuleConfig): Array<string> {
     const dependencies = this._hasteFS.getDependencies(file);
+    // eslint-disable-next-line no-console
+    console.log('DEPS', dependencies);
     if (!dependencies) {
       return [];
     }
@@ -62,6 +64,7 @@ export class DependencyResolver {
       }
 
       if (resolvedDependency == null) {
+        console.log('didnt resolve', dependency);
         return acc;
       }
 
@@ -77,7 +80,7 @@ export class DependencyResolver {
       } catch {
         // leave resolvedMockDependency as undefined if nothing can be found
       }
-
+      console.log('resolvedMockDependency', resolvedMockDependency);
       if (resolvedMockDependency != null) {
         // eslint-disable-next-line no-console
         console.log(options?.customMockPath);

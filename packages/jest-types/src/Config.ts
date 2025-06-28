@@ -208,6 +208,7 @@ export type DefaultOptions = {
   watchPathIgnorePatterns: Array<string>;
   watchman: boolean;
   workerThreads: boolean;
+  customMockPath?: string;
 };
 
 export type DisplayName = {

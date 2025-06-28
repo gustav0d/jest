@@ -7,4 +7,5 @@
  */
 
 require('./file');
+require('./add');
 require('fake-node-module');

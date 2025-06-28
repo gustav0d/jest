@@ -164,3 +164,52 @@ test('resolves dependencies correctly when mock dependency resolution fails', ()
     expect.stringContaining(path.join('__tests__', '__fixtures__', 'file.js')),
   ]);
 });
+
+test('includes the mocks of dependencies when customMockPath option is passed', async () => {
+  // I'll remove these later when I find the correct part
+  const testinasod = async () => {
+    const Runtime = (require('jest-runtime') as typeof import('jest-runtime'))
+      .default;
+    config = makeProjectConfig({
+      cacheDirectory: path.resolve(tmpdir(), 'jest-resolve-dependencies-test'),
+      customMockPath: 'customMock',
+      moduleDirectories: ['node_modules'],
+      moduleNameMapper: [['^\\$asdf/(.*)$', '<rootDir>/$1']],
+      rootDir: '.',
+      roots: ['./packages/jest-resolve-dependencies'],
+    });
+    const runtimeContext = await Runtime.createContext(config, {
+      maxWorkers,
+      watchman: false,
+    });
+
+    runtimeContextResolver = runtimeContext.resolver;
+    dependencyResolver = new DependencyResolver(
+      runtimeContext.resolver,
+      runtimeContext.hasteFS,
+      await buildSnapshotResolver(config),
+    );
+  };
+  await testinasod();
+  const resolved = dependencyResolver.resolve(
+    path.resolve(__dirname, '__fixtures__/hasMocked/customMock.test.js'),
+  );
+
+  expect(resolved).toEqual([
+    expect.stringContaining(path.join('hasMocked', 'file.js')),
+    expect.stringContaining(
+      path.join('hasMocked', 'customMock', 'mockFile.js'),
+    ),
+    expect.stringContaining(path.join('__mocks__', 'fake-node-module.js')),
+  ]);
+
+  //  const resolved = dependencyResolver.resolve(
+  //   path.resolve(__dirname, '__fixtures__/hasMocked/file.test.js'),
+  // );
+
+  // expect(resolved).toEqual([
+  //   expect.stringContaining(path.join('hasMocked', 'file.js')),
+  //   expect.stringContaining(path.join('hasMocked', '__mocks__', 'file.js')),
+  //   expect.stringContaining(path.join('__mocks__', 'fake-node-module.js')),
+  // ]);
+});
